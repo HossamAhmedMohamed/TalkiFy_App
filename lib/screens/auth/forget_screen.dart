@@ -1,6 +1,10 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:chat_material3/utils/colors.dart';
 import 'package:chat_material3/widgets/logo.dart';
 import 'package:chat_material3/widgets/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -44,17 +48,36 @@ class _ForgetScreenState extends State<ForgetScreen> {
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (emailCon.text == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Email is required")),
+                    );
+                    return;
+                  }
+
+                  try {
+                    await FirebaseAuth.instance.sendPasswordResetEmail(email: emailCon.text);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Email sent successfully")),
+                    );
+                  } catch (e) {
+                    print(e.toString());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Failed to send email")),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
                   backgroundColor: kPrimaryColor,
                   padding: const EdgeInsets.all(16),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
-                    "Send Email".toUpperCase(),
-                    style: const TextStyle(color: Colors.black),
+                    "Send Email",
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),

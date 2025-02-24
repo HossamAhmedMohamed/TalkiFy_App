@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:chat_material3/screens/auth/forget_screen.dart';
 import 'package:chat_material3/utils/colors.dart';
 import 'package:chat_material3/widgets/logo.dart';
 import 'package:chat_material3/widgets/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -19,7 +22,10 @@ class _LoginScreenState extends State<LoginScreen> {
     TextEditingController passCon = TextEditingController();
     final formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -34,10 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 "Welcome Back,",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
-              Text(
-                "Material Chat App With Nabil AL Amawi",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              // Text(
+              //   "Material Chat App With Nabil AL Amawi",
+              //   style: Theme.of(context).textTheme.bodyLarge,
+              // ),
               Form(
                 key: formKey,
                 child: Column(
@@ -75,7 +81,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 16,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async{
+                        if (!formKey.currentState!.validate()) {
+                          return;
+                        }
+
+                        try {
+                          await FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: emailCon.text, password: passCon.text);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Login Successfully"),
+                            ),
+                          );
+                        } catch (e) {
+                          print(e.toString());
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Invalid Credentials"),
+                            ),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
@@ -98,13 +126,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           padding: const EdgeInsets.all(16),
                         ),
-                        onPressed: () {
-                          // Navigator.pushAndRemoveUntil(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => SetupProfile(),
-                          //     ),
-                          //     (route) => false);
+                        onPressed: () async {
+                          if (!formKey.currentState!.validate()) {
+                            return;
+                          }
+                          try {
+                            await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: emailCon.text,
+                                    password: passCon.text);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Account Created"),
+                              ),
+                            );
+                          } catch (e) {
+                            print(e.toString());
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.toString()),
+                              ),
+                            );
+                          }
                         },
                         child: Center(
                           child: Text(
