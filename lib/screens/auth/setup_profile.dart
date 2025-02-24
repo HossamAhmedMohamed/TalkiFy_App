@@ -31,10 +31,10 @@ class _SetupProfileState extends State<SetupProfile> {
                 "Welcome,",
                 style: Theme.of(context).textTheme.displayMedium,
               ),
-              Text(
-                "Nabil AL Amawi Course",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              // Text(
+              //   "Nabil AL Amawi Course",
+              //   style: Theme.of(context).textTheme.bodyLarge,
+              // ),
               const SizedBox(
                 height: 16,
               ),
@@ -58,10 +58,10 @@ class _SetupProfileState extends State<SetupProfile> {
                   backgroundColor: kPrimaryColor,
                   padding: const EdgeInsets.all(16),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
-                    "Continuo".toUpperCase(),
-                    style: const TextStyle(color: Colors.black),
+                    "Continue",
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),

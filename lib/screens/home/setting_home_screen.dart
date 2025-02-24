@@ -1,5 +1,6 @@
 import 'package:chat_material3/screens/settings/profile.dart';
 import 'package:chat_material3/screens/settings/qr_code.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:iconsax/iconsax.dart';
@@ -88,10 +89,80 @@ class _SettingHomeScreenState extends State<SettingHomeScreen> {
                 ),
               ),
             ),
-            const Card(
+            Card(
               child: ListTile(
-                title: Text("Signout"),
-                trailing: Icon(Iconsax.logout_1),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return Center(
+                          child: AlertDialog(
+                            content: const FittedBox(
+                              child: Text(
+                                'Are you sure you want to log out?',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            backgroundColor: Colors.white,
+                            scrollable: true,
+                            actions: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      Navigator.pop(context);
+                                      await FirebaseAuth.instance.signOut();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: ShapeDecoration(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              side: const BorderSide(
+                                                  color: Colors.black))),
+                                      child: const Text(
+                                        "Yes",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 17),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: ShapeDecoration(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              side: const BorderSide(
+                                                  color: Colors.black))),
+                                      child: const Text(
+                                        "No",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 17),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      });
+                },
+                title: const Text("Signout"),
+                trailing: const Icon(Iconsax.logout_1),
               ),
             ),
           ]),

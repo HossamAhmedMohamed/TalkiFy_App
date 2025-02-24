@@ -1,9 +1,15 @@
+import 'package:chat_material3/firebase_options.dart';
+import 'package:chat_material3/layout.dart';
 import 'package:chat_material3/screens/auth/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -16,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        themeMode: ThemeMode.system,
+        themeMode: ThemeMode.dark,
         darkTheme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.red, brightness: Brightness.dark),
@@ -26,6 +32,14 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.blue, brightness: Brightness.light),
           useMaterial3: true,
         ),
-        home: const LoginScreen());
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.userChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const LayoutApp();
+              } else {
+                return const LoginScreen();
+              }
+            }));
   }
 }
