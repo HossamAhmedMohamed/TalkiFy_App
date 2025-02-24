@@ -1,7 +1,7 @@
-import 'package:chat_material3/screens/contacts/contact_card.dart';
-import 'package:chat_material3/widgets/text_field.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/screens/contacts/contact_card.dart';
+import 'package:whats_app/widgets/text_field.dart';
 
 class ContactHomeScreen extends StatefulWidget {
   const ContactHomeScreen({super.key});

@@ -1,9 +1,9 @@
-import 'package:chat_material3/screens/settings/profile.dart';
-import 'package:chat_material3/screens/settings/qr_code.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/screens/settings/profile.dart';
+import 'package:whats_app/screens/settings/qr_code.dart';
 
 class SettingHomeScreen extends StatefulWidget {
   const SettingHomeScreen({super.key});

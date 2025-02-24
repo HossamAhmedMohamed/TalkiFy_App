@@ -1,9 +1,10 @@
-import 'package:chat_material3/firebase_options.dart';
-import 'package:chat_material3/layout.dart';
-import 'package:chat_material3/screens/auth/login_screen.dart';
+ 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_app/firebase_options.dart';
+import 'package:whats_app/layout.dart';
+import 'package:whats_app/screens/auth/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

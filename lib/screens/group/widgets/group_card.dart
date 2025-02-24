@@ -1,5 +1,5 @@
-import 'package:chat_material3/screens/group/group_screen.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
+import 'package:whats_app/screens/group/group_screen.dart';
 
 class GroupCard extends StatelessWidget {
   const GroupCard({

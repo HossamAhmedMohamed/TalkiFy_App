@@ -1,6 +1,6 @@
-import 'package:chat_material3/screens/group/group_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/screens/group/group_edit.dart';
 
 class GroupMemberScreen extends StatefulWidget {
   const GroupMemberScreen({super.key});

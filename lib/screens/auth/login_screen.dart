@@ -1,12 +1,13 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:chat_material3/screens/auth/forget_screen.dart';
-import 'package:chat_material3/utils/colors.dart';
-import 'package:chat_material3/widgets/logo.dart';
-import 'package:chat_material3/widgets/text_field.dart';
+ 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/screens/auth/forget_screen.dart';
+import 'package:whats_app/utils/colors.dart';
+import 'package:whats_app/widgets/logo.dart';
+import 'package:whats_app/widgets/text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

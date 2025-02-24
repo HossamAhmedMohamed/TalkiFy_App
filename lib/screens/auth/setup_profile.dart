@@ -1,7 +1,7 @@
-import 'package:chat_material3/utils/colors.dart';
-import 'package:chat_material3/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/utils/colors.dart';
+import 'package:whats_app/widgets/text_field.dart';
 
 class SetupProfile extends StatefulWidget {
   const SetupProfile({super.key});
