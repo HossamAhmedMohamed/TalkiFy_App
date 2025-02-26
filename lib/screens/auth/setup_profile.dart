@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/core/firebase/fire_base_auth.dart';
 import 'package:whats_app/utils/colors.dart';
 import 'package:whats_app/widgets/text_field.dart';
 
@@ -16,7 +19,11 @@ class _SetupProfileState extends State<SetupProfile> {
     TextEditingController nameCon = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Iconsax.logout_1))],
+        actions: [
+          IconButton(onPressed: () async{
+            await FirebaseAuth.instance.signOut();
+          }, icon: const Icon(Iconsax.logout_1))
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -51,7 +58,15 @@ class _SetupProfileState extends State<SetupProfile> {
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (nameCon.text.isEmpty) {
+                    Fluttertoast.showToast(msg: "Please enter your name");
+                  } else {
+                    await FirebaseAuth.instance.currentUser!
+                        .updateDisplayName(nameCon.text)
+                        .then((value) => FireAuth.createUser());
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),

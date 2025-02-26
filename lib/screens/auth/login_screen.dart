@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
- 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:whats_app/screens/auth/forget_screen.dart';
 import 'package:whats_app/utils/colors.dart';
@@ -17,10 +17,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailCon = TextEditingController();
+  TextEditingController passCon = TextEditingController();
+
+  @override
+  void dispose() {
+    emailCon.dispose();
+    passCon.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailCon = TextEditingController();
-    TextEditingController passCon = TextEditingController();
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 20,
               ),
               Text(
-                "Welcome Back,",
+                "Welcome Back",
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               // Text(
@@ -82,20 +90,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 16,
                     ),
                     ElevatedButton(
-                      onPressed: () async{
+                      onPressed: () async {
                         if (!formKey.currentState!.validate()) {
                           return;
                         }
 
                         try {
-                          await FirebaseAuth.instance.signInWithEmailAndPassword(
-                              email: emailCon.text, password: passCon.text);
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailCon.text, password: passCon.text);
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Login Successfully"),
-                            ),
-                          );
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     content: Text("Login Successfully"),
+                          //   ),
+                          // );
                         } catch (e) {
                           print(e.toString());
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -136,18 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .createUserWithEmailAndPassword(
                                     email: emailCon.text,
                                     password: passCon.text);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Account Created"),
-                              ),
-                            );
+                            // await FireAuth.createUser();
+                            Fluttertoast.showToast(msg: 'Account Created');
                           } catch (e) {
                             print(e.toString());
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(e.toString()),
-                              ),
-                            );
+                            Fluttertoast.showToast(msg: e.toString());
                           }
                         },
                         child: Center(
