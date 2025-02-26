@@ -1,9 +1,10 @@
-import 'package:chat_material3/screens/home/chat_home_screen.dart';
-import 'package:chat_material3/screens/home/contact_home_screen.dart';
-import 'package:chat_material3/screens/home/group_home_screen.dart';
-import 'package:chat_material3/screens/home/setting_home_screen.dart';
+ 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/screens/home/chat_home_screen.dart';
+import 'package:whats_app/screens/home/contact_home_screen.dart';
+import 'package:whats_app/screens/home/group_home_screen.dart';
+import 'package:whats_app/screens/home/setting_home_screen.dart';
 
 class LayoutApp extends StatefulWidget {
   const LayoutApp({super.key});

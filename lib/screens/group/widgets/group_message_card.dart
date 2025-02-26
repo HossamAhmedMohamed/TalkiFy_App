@@ -15,7 +15,8 @@ class GroupMessageCard extends StatelessWidget {
           index % 2 == 0 ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         index % 2 == 0
-            ? IconButton(onPressed: () {}, icon: const Icon(Iconsax.message_edit))
+            ? IconButton(
+                onPressed: () {}, icon: const Icon(Iconsax.message_edit))
             : const SizedBox(),
         Card(
           shape: RoundedRectangleBorder(
@@ -26,7 +27,7 @@ class GroupMessageCard extends StatelessWidget {
             topRight: const Radius.circular(16),
           )),
           color: index % 2 == 0
-              ? Theme.of(context).colorScheme.background
+              ? Theme.of(context).colorScheme.surface
               : Theme.of(context).colorScheme.primaryContainer,
           child: Padding(
             padding: const EdgeInsets.all(12.0),

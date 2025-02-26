@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'package:chat_material3/utils/colors.dart';
-import 'package:chat_material3/widgets/logo.dart';
-import 'package:chat_material3/widgets/text_field.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/utils/colors.dart';
+import 'package:whats_app/widgets/logo.dart';
+import 'package:whats_app/widgets/text_field.dart';
 
 class ForgetScreen extends StatefulWidget {
   const ForgetScreen({super.key});

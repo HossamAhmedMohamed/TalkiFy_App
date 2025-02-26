@@ -1,6 +1,6 @@
-import 'package:chat_material3/utils/colors.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:whats_app/utils/colors.dart';
 
 class LogoApp extends StatelessWidget {
   const LogoApp({

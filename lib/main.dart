@@ -1,9 +1,10 @@
-import 'package:chat_material3/firebase_options.dart';
-import 'package:chat_material3/layout.dart';
-import 'package:chat_material3/screens/auth/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_app/firebase_options.dart';
+import 'package:whats_app/layout.dart';
+import 'package:whats_app/screens/auth/login_screen.dart';
+import 'package:whats_app/screens/auth/setup_profile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,13 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.userChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const LayoutApp();
+                if (FirebaseAuth.instance.currentUser!.displayName == "" ||
+                    FirebaseAuth.instance.currentUser!.displayName == null) {
+                  return const SetupProfile();
+                }
+                else{
+                  return const LayoutApp();
+                }
               } else {
                 return const LoginScreen();
               }
