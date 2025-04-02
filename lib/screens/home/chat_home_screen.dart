@@ -1,5 +1,12 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:whats_app/core/firebase/fire_base_room.dart';
+import 'package:whats_app/core/models/chat_room_model.dart';
 import 'package:whats_app/screens/chat/widgets/chat_card.dart';
 import 'package:whats_app/widgets/text_field.dart';
 
@@ -28,7 +35,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                     Row(
                       children: [
                         Text(
-                          "Enter Friend Email",
+                          "Enter Your Friend Email",
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         const Spacer(),
@@ -53,7 +60,20 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             backgroundColor:
                                 Theme.of(context).colorScheme.primaryContainer),
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (emailCon.text.isEmpty) {
+                            Fluttertoast.showToast(msg: 'Please enter email');
+                          } else {
+                            await FireBaseRoom()
+                                .createRoom(emailCon.text)
+                                .then((value) {
+                              setState(() {
+                                emailCon.clear();
+                              });
+                              Navigator.pop(context);
+                            });
+                          }
+                        },
                         child: const Center(
                           child: Text("Create Chat"),
                         ))
@@ -73,11 +93,38 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return const ChatCard();
-                  }),
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('rooms')
+                    .where(
+                      'members',
+                      arrayContains: FirebaseAuth.instance.currentUser!.uid,
+                    )
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<ChatRoomModel> rooms = snapshot.data!.docs
+                        .map((e) => ChatRoomModel.fromJson(e.data()))
+                        .toList()
+                      ..sort(
+                        (a, b) =>
+                            b.lastMessageTime!.compareTo(a.lastMessageTime!),
+                      );
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return ChatCard(
+                          chatRoom: rooms[index],
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

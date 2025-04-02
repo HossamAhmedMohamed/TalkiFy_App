@@ -1,6 +1,9 @@
- 
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:whats_app/screens/home/chat_home_screen.dart';
 import 'package:whats_app/screens/home/contact_home_screen.dart';
 import 'package:whats_app/screens/home/group_home_screen.dart';
@@ -17,8 +20,21 @@ class _LayoutAppState extends State<LayoutApp> {
   int currentIndex = 0;
   PageController pageController = PageController();
 
+  Future<void> setSupabaseAuth() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      log('email: ${user.email}');
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: user.email,
+        password: '123456',
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    setSupabaseAuth();
     return Scaffold(
       body: PageView(
         onPageChanged: (value) {

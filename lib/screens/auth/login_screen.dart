@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:whats_app/screens/auth/forget_screen.dart';
 import 'package:whats_app/utils/colors.dart';
 import 'package:whats_app/widgets/logo.dart';
@@ -141,10 +142,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             return;
                           }
                           try {
+                            await Supabase.instance.client.auth.signUp(
+                              email: emailCon.text,
+                              password: '123456',
+                            );
+                          } catch (e) {
+                            print(e.toString());
+                          }
+
+                          try {
                             await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: emailCon.text,
                                     password: passCon.text);
+
                             // await FireAuth.createUser();
                             Fluttertoast.showToast(msg: 'Account Created');
                           } catch (e) {

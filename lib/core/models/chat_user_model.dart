@@ -33,7 +33,7 @@ class ChatUserModel {
       createdAt: json['created_at'],
       lastActivated: json['last_activated'],
       pushToken: json['push_token'],
-      online: json['online'] == 'true',
+      online: json['online'] == true,
     );
   }
 

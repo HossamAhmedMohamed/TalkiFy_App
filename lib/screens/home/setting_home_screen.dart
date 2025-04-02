@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:whats_app/screens/settings/profile.dart';
 import 'package:whats_app/screens/settings/qr_code.dart';
 
@@ -116,6 +117,7 @@ class _SettingHomeScreenState extends State<SettingHomeScreen> {
                                     onTap: () async {
                                       Navigator.pop(context);
                                       await FirebaseAuth.instance.signOut();
+                                      await Supabase.instance.client.auth.signOut();
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.all(6),
